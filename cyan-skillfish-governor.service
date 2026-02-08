@@ -2,7 +2,7 @@
 Description=Cyan Skillfish GPU Governor
 
 [Service]
-ExecStart=/usr/bin/cyan-skillfish-governor /etc/cyan-skillfish-governor/config.toml
+ExecStart=/usr/local/bin/cyan-skillfish-governor /etc/cyan-skillfish-governor/config.toml
 Restart=on-failure
 RestartSec=5
 

@@ -1,28 +1,38 @@
 # us
 [timing.intervals]
-sample = 2000
-adjust = 20_000
-finetune = 1_000_000_000
+sample = 10_000 #  in us (default: 2000 = 2ms, max: 65535)
+adjust = 20_000  # default: 10 * sample = 20_000 (20ms)
+finetune = 1_000_000  # default: 50_000 * sample = 100_000_000 (100s)
+#log = 1  # Log display interval in seconds (default: 60s)
+optimize = 100_000  # Stability delay before optimization (default: 30_000_000 = 30s, 0 = disabled)
 
 # MHz/ms
 [timing.ramp-rates]
-normal = 1
-burst = 200
+normal = 0.1   # Normal ramp up/down rate (default: 1.0 MHz/ms)
+burst = 2   # default: 50 * normal = 50.0 MHz/ms
 
 # number of samples
+# Burst detection: number of consecutive active samples required
+# Value 48 = 96ms of continuous activity (48 × 2ms)
+# Set to 0 to completely DISABLE burst mechanism
 [timing]
-burst-samples = 48
+burst-samples = 0  # default: 48 (0 = burst disabled)
+window-samples = 100  # Number of samples for moving average (default: 100)
 
 # MHz
 [frequency-thresholds]
-adjust = 100
-finetune = 10
+adjust = 100  # default: 10 * finetune = 100 MHz
+finetune = 10  # default: 10 MHz
 
+# GPU load thresholds in percentage (0-100)
+# Now uses real percentage calculation like radeontop
+# Frequency increases if load > upper, decreases if load < lower
+# Between lower and upper = stable zone (no change)
 [load-target]
-upper = 0.95
-lower = 0.7
+upper = 98.0  # default: 90.0%
+lower = 80.0  # default: upper - 10% = 80.0%
 
-[[safe-points]]
+[[safe-points]] # need a patched kernel
 frequency = 350 # MHz
 voltage = 700 # mV
 
