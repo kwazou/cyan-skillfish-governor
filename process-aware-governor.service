@@ -1,0 +1,13 @@
+[Unit]
+Description=Process-Aware GPU Governor with Learning Database
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/process-aware-governor
+Restart=on-failure
+RestartSec=5
+Environment="DEBUG_GPU_PROCESSES=0"
+
+[Install]
+WantedBy=multi-user.target
