@@ -1,6 +1,7 @@
 // Public modules
 pub mod governor;
 pub mod gpu_info;
+pub mod gpu_sensor;
 pub mod load_monitor;
 pub mod process_detection;
 pub mod process_monitor;
