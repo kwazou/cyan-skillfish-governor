@@ -10,6 +10,7 @@ A dynamic GPU frequency governor for the AMD Cyan Skillfish APU (Steam Deck).
 - **Radeontop-style load calculation**: Accurate GPU utilization percentage using moving average
 - **Configurable thresholds**: Fine-tune behavior with adjustable load targets and ramp rates
 - **Safe voltage/frequency management**: Operates within user-defined safe points
+- **Static frequency control**: Manual frequency setting tool for testing or fixed performance needs
 
 ## Installation
 
@@ -163,6 +164,38 @@ The governor outputs frequency changes with detailed information:
 ```
 
 Log output is rate-limited to the configured interval to avoid spam.
+
+## Static Frequency Control
+
+For testing, benchmarking, or when you need fixed GPU performance, use the `set-gpu-freq` tool:
+
+### Installation
+
+```bash
+sudo ./install_set_gpu_freq.sh
+```
+
+### Usage
+
+```bash
+# Set GPU to 800 MHz
+sudo set-gpu-freq 800
+
+# Set GPU to maximum frequency
+sudo set-gpu-freq 1600
+
+# Show available frequencies
+./show_gpu_freqs.sh
+```
+
+**⚠️ Important:** The dynamic governor and static frequency cannot run simultaneously. Stop the governor service first:
+
+```bash
+sudo systemctl stop cyan-skillfish-governor.service
+sudo set-gpu-freq 1200
+```
+
+See [SET_GPU_FREQ_README.md](SET_GPU_FREQ_README.md) for detailed documentation.
 
 ## License
 

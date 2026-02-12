@@ -81,7 +81,15 @@ fn main() {
     }
 
     // Créer et lancer le sensor
-    let mut sensor = GpuSensor::new(&sensor_path, interval_ms);
+    let window_size = 100; // Nombre d'échantillons pour la moyenne mobile
+    let mut sensor = match GpuSensor::new(&sensor_path, interval_ms, window_size) {
+        Ok(s) => s,
+        Err(e) => {
+            eprintln!("❌ Erreur initialisation GPU sensor: {}", e);
+            eprintln!("   Assurez-vous d'être sur un Steam Deck avec un GPU Cyan Skillfish");
+            process::exit(1);
+        }
+    };
 
     // Gérer Ctrl+C proprement
     let running = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(true));
